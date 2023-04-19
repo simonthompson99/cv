@@ -1,0 +1,539 @@
+%To Do:
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%% Simple LaTeX CV Template %%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% NOTE: If you find that it says                                     %%
+%%                                                                    %%
+%%                           1 of ??                                  %%
+%%                                                                    %%
+%% at the bottom of your first page, this means that the AUX file     %%
+%% was not available when you ran LaTeX on this source. Simply RERUN  %%
+%% LaTeX to get the ``??'' replaced with the number of the last page  %%
+%% of the document. The AUX file will be generated on the first run   %%
+%% of LaTeX and used on the second run to fill in all of the          %%
+%% references.                                                        %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%% Document Setup %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Don't like 10pt? Try 11pt or 12pt
+\documentclass[10pt]{article}
+\RequirePackage[T1]{fontenc}
+
+% LaTeX will typeset using Computer Modern Roman, which a lot of
+% non-mathematicians and non-engineers won't like. Also, a few PDF
+% viewers may not render CMR very well. Instead, Times New Roman can
+% be used. That's what this package does.
+\usepackage{times}
+
+% The automated optical recognition software used to digitize resume
+% information works best with fonts that do not have serifs. This
+% command uses a sans serif font throughout. Uncomment both lines (or at
+% least the second) to restore a Roman font (i.e., a font with serifs).
+% (NOTE: This requires the times package above)
+%\renewcommand{\familydefault}{\sfdefault}
+
+% This is a helpful package that puts math inside length specifications
+\usepackage{calc}
+
+% This package helps LaTeX auto-hyphenate hyphenated words if you use
+% special hyphens. For example, bio\-/mimicry will properly hyphenate
+% ``mimicry'' if necessary.
+\usepackage[shortcuts]{extdash}
+
+% Layout: Puts the section titles on left side of page
+\reversemarginpar
+
+%
+%         PAPER SIZE, PAGE NUMBER, AND DOCUMENT LAYOUT NOTES:
+%
+% The next \usepackage line changes the layout for CV style section
+% headings as marginal notes. It also sets up the paper size as either
+% letter or A4. By default, letter was used. If A4 paper is desired,
+% comment out the letterpaper lines and uncomment the a4paper lines.
+%
+% As you can see, the margin widths and section title widths can be
+% easily adjusted.
+%
+% ALSO: Notice that the includefoot option can be commented OUT in order
+% to put the PAGE NUMBER *IN* the bottom margin. This will make the
+% effective text area larger.
+%
+% IF YOU WISH TO REMOVE THE ``of LASTPAGE'' next to each page number,
+% see the note about the +LP and -LP lines below. Comment out the +LP
+% and uncomment the -LP.
+%
+% IF YOU WISH TO REMOVE PAGE NUMBERS, be sure that the includefoot line
+% is uncommented and ALSO uncomment the \pagestyle{empty} a few lines
+% below.
+%
+
+%% Use these lines for letter-sized paper
+%\usepackage[paper=letterpaper,
+ %           %includefoot, % Uncomment to put page number above margin
+  %          marginparwidth=1.2in,     % Length of section titles
+   %         marginparsep=.05in,       % Space between titles and text
+    %        margin=1in,               % 1 inch margins
+     %       includemp]{geometry}
+
+%% Use these lines for A4-sized paper
+\usepackage[paper=a4paper,
+            %includefoot, % Uncomment to put page number above margin
+            marginparwidth=30.5mm,    % Length of section titles
+            marginparsep=1.5mm,       % Space between titles and text
+            margin=25mm,              % 25mm margins
+            includemp]{geometry}
+
+%% More layout: Get rid of indenting throughout entire document
+\setlength{\parindent}{0in}
+
+% Provides special list environments and macros to create new ones
+\usepackage[shortlabels]{enumitem}
+
+% Simpler bibsections for CV sections
+% (thanks to natbib for inspiration)
+%
+% * For lists of references with hanging indents and no numbers:
+%
+%   \begin{bibsection}
+%       \item ...
+%   \end{bibsection}
+%
+% * For numbered lists of references (with hanging indents):
+%
+%   \begin{bibenum}
+%       \item ...
+%   \end{bibenum}
+%
+%   Note that bibenum numbers continuously throughout. To reset the
+%   counter, use
+%
+%   \restartlist{bibenum}
+%
+%   at the place where you want the numbering to reset.
+
+\makeatletter
+\newlength{\bibhang}
+\setlength{\bibhang}{1em}
+\newlength{\bibsep}
+ {\@listi \global\bibsep\itemsep \global\advance\bibsep by\parsep}
+\newlist{bibsection}{itemize}{3}
+\setlist[bibsection]{label=,leftmargin=\bibhang,%
+        itemindent=-\bibhang,
+        itemsep=\bibsep,parsep=\z@,partopsep=0pt,
+        topsep=0pt}
+\newlist{bibenum}{enumerate}{3}
+\setlist[bibenum]{label=[\arabic*],resume,leftmargin={\bibhang+\widthof{[999]}},%
+        itemindent=-\bibhang,
+        itemsep=\bibsep,parsep=\z@,partopsep=0pt,
+        topsep=0pt}
+\let\oldendbibenum\endbibenum
+\def\endbibenum{\oldendbibenum\vspace{-.6\baselineskip}}
+\let\oldendbibsection\endbibsection
+\def\endbibsection{\oldendbibsection\vspace{-.6\baselineskip}}
+\makeatother
+
+%% Reference the last page in the page number
+%
+% NOTE: comment the +LP line and uncomment the -LP line to have page
+%       numbers without the ``of ##'' last page reference)
+%
+% NOTE: uncomment the \pagestyle{empty} line to get rid of all page
+%       numbers (make sure includefoot is commented out above)
+%
+\usepackage{fancyhdr,lastpage}
+\pagestyle{fancy}
+%\pagestyle{empty}      % Uncomment this to get rid of page numbers
+\fancyhf{}\renewcommand{\headrulewidth}{0pt}
+\fancyfootoffset{\marginparsep+\marginparwidth}
+\newlength{\footpageshift}
+\setlength{\footpageshift}
+          {0.5\textwidth+0.5\marginparsep+0.5\marginparwidth-2in}
+\lfoot{\hspace{\footpageshift}%
+       \parbox{4in}{\, \hfill %
+                    \arabic{page} of \protect\pageref*{LastPage} % +LP
+%                    \arabic{page}                               % -LP
+                    \hfill \,}}
+
+% Finally, give us PDF bookmarks
+\usepackage{color,hyperref}
+\definecolor{darkblue}{rgb}{0.0,0.0,0.3}
+\hypersetup{colorlinks,breaklinks,
+            linkcolor=darkblue,urlcolor=darkblue,
+            anchorcolor=darkblue,citecolor=darkblue}
+
+%%%%%%%%%%%%%%%%%%%%%%%% End Document Setup %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%% Helper Commands %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%% HEADING AT TOP OF CURRICULUM VITAE
+
+% The title (name) with a horizontal rule under it
+% (optional argument typesets an object right-justified across from name
+%  as well)
+%
+% Usage: \makeheading{name}
+%        OR
+%        \makeheading[right_object]{name}
+%
+% Place at top of document. It should be the first thing.
+% If ``right_object'' is provided in the square-braced optional
+% argument, it will be right justified on the same line as ``name'' at
+% the top of the CV. For example:
+%
+%       \makeheading[\emph{Curriculum vitae}]{Your Name}
+%
+% will put an emphasized ``Curriculum vitae'' at the top of the document
+% as a title. Likewise, a picture could be included:
+%
+%   \makeheading[{\includegraphics[height=1.5in]{my_picture}}]{Your Name}
+%
+% the picture will be flush right across from the name. For this example
+% to work, make sure the extra set of curly braces is included. Also
+% makes ure that \usepackage{graphicx} is somewhere in the preamble.
+\newcommand{\makeheading}[2][]%
+        {\hspace*{-\marginparsep minus \marginparwidth}%
+         \begin{minipage}[t]{\textwidth+\marginparwidth+\marginparsep}%
+             {\large \bfseries #2 \hfill #1}\\[-0.15\baselineskip]%
+                 \rule{\columnwidth}{1pt}%
+         \end{minipage}}
+
+%%% SECTION HEADINGS
+
+% The section headings. Flush left in small caps down pseudo-margin.
+%
+% Usage: \section{section name}
+\renewcommand{\section}[1]{\pagebreak[3]%
+    \vspace{1.3\baselineskip}%
+    \phantomsection\addcontentsline{toc}{section}{#1}%
+    \noindent\llap{\scshape\smash{\parbox[t]{\marginparwidth}{\hyphenpenalty=10000\raggedright #1}}}%
+    \vspace{-\baselineskip}\par}
+
+%%% LISTS
+
+% This macro alters a list by removing some of the space that follows the list
+% (is used by lists below)
+\newcommand*\fixendlist[1]{%
+    \expandafter\let\csname preFixEndListend#1\expandafter\endcsname\csname end#1\endcsname
+    \expandafter\def\csname end#1\endcsname{\csname preFixEndListend#1\endcsname\vspace{-0.6\baselineskip}}}
+
+% These macros help ensure that items in outer-type lists do not get
+% separated from the next line by a page break
+% (they are used by lists below)
+\let\originalItem\item
+\newcommand*\fixouterlist[1]{%
+    \expandafter\let\csname preFixOuterList#1\expandafter\endcsname\csname #1\endcsname
+    \expandafter\def\csname #1\endcsname{\let\oldItem\item\def\item{\pagebreak[2]\oldItem}\csname preFixOuterList#1\endcsname}
+    \expandafter\let\csname preFixOuterListend#1\expandafter\endcsname\csname end#1\endcsname
+    \expandafter\def\csname end#1\endcsname{\let\item\oldItem\csname preFixOuterListend#1\endcsname}}
+\newcommand*\fixinnerlist[1]{%
+    \expandafter\let\csname preFixInnerList#1\expandafter\endcsname\csname #1\endcsname
+    \expandafter\def\csname #1\endcsname{\let\oldItem\item\let\item\originalItem\csname preFixInnerList#1\endcsname}
+    \expandafter\let\csname preFixInnerListend#1\expandafter\endcsname\csname end#1\endcsname
+    \expandafter\def\csname end#1\endcsname{\csname preFixInnerListend#1\endcsname\let\item\oldItem}}
+
+% An itemize-style list with lots of space between items
+%
+% Usage:
+%   \begin{outerlist}
+%       \item ...    % (or \item[] for no bullet)
+%   \end{outerlist}
+\newlist{outerlist}{itemize}{3}
+    \setlist[outerlist]{label=\enskip\textbullet,leftmargin=*}
+    \fixendlist{outerlist}
+    \fixouterlist{outerlist}
+
+% An environment IDENTICAL to outerlist that has better pre-list spacing
+% when used as the first thing in a \section
+%
+% Usage:
+%   \begin{lonelist}
+%       \item ...    % (or \item[] for no bullet)
+%   \end{lonelist}
+\newlist{lonelist}{itemize}{3}
+    \setlist[lonelist]{label=\enskip\textbullet,leftmargin=*,partopsep=0pt,topsep=0pt}
+    \fixendlist{lonelist}
+    \fixouterlist{lonelist}
+
+% An itemize-style list with little space between items
+%
+% Usage:
+%   \begin{innerlist}
+%       \item ...    % (or \item[] for no bullet)
+%   \end{innerlist}
+\newlist{innerlist}{itemize}{3}
+    \setlist[innerlist]{label=\enskip\textbullet,leftmargin=*,parsep=0pt,itemsep=0pt,topsep=0pt,partopsep=0pt}
+    \fixinnerlist{innerlist}
+
+% An environment IDENTICAL to innerlist that has better pre-list spacing
+% when used as the first thing in a \section
+%
+% Usage:
+%   \begin{loneinnerlist}
+%       \item ...    % (or \item[] for no bullet)
+%   \end{loneinnerlist}
+\newlist{loneinnerlist}{itemize}{3}
+    \setlist[loneinnerlist]{label=\enskip\textbullet,leftmargin=*,parsep=0pt,itemsep=0pt,topsep=0pt,partopsep=0pt}
+    \fixendlist{loneinnerlist}
+    \fixinnerlist{loneinnerlist}
+
+%%% EXTRA SPACE
+
+% To add some paragraph space between lines.
+% This also tells LaTeX to preferably break a page on one of these gaps
+% if there is a needed pagebreak nearby.
+\newcommand{\blankline}{\quad\pagebreak[3]}
+\newcommand{\halfblankline}{\quad\vspace{-0.5\baselineskip}\pagebreak[3]}
+
+%%% FORMATTING MACROS
+
+% Provides a linked \doi{#1} that links doi:#1 to http://dx.doi.org/#1
+\usepackage{doi}
+% To change the text before the DOI, adjust this command
+%\renewcommand\doitext{doi:}
+
+% Provides a linked \url{#1} that doesn't require escape characters
+\usepackage{url}
+
+% You can adjust the style \url{} uses here:
+% (options are: same, rm, sf, tt; defaults to tt)
+\urlstyle{same}
+
+% For \email{ADDRESS}, links ADDRESS to the url mailto:ADDRESS
+% (uncomment to typeset the e\-/mail address in typewriter font;
+%  otherwise, will be typeset in the \urlstyle above)
+%\DeclareUrlCommand\emaillink{\urlstyle{tt}}
+\providecommand*\emaillink[1]{\nolinkurl{#1}}
+\providecommand*\email[1]{\href{mailto:#1}{\emaillink{#1}}}
+
+\providecommand\BibTeX{{B\kern-.05em{\sc i\kern-.025em b}\kern-.08em \TeX}}
+\providecommand\Matlab{\textsc{Matlab}}
+
+% Custom hyphenation rules for words that LaTeX has trouble with
+\hyphenation{bio-mim-ic-ry bio-in-spi-ra-tion re-us-a-ble pro-vid-er Media-Wiki}
+
+%%%%%%%%%%%%%%%%%%%%%%%% End Helper Commands %%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%% Begin CV Document %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%ToDo
+%1. Change to A4 before sending out
+
+
+
+\begin{document}
+\makeheading{Dr.~Simon~R.~Thompson, {\em Clinical Data Scientist}
+%\email{simontho@upenn.edu}
+}
+
+\section{Contact Information}
+% NOTE: Mind where the & separators and \\ breaks are in the following
+%       table. Table is one row made up of three parboxes. The left
+%       parbox has address info, the middle parbox has a vertical bar,
+%       and the right parbox has phone and electronic contact
+%       information.
+%
+% MACROS: \rcollength is the width of the right column of the table
+%             (adjust it to your liking; default is 1.85in).
+%         \spacewidth is width of area between left and right boxes.
+%
+\newlength{\rcollength}\setlength{\rcollength}{3.25in}%
+\newlength{\spacewidth}\setlength{\spacewidth}{20pt}
+%
+\vspace{-3pt}
+\begin{tabular}[t]{@{}p{\textwidth-\rcollength-\spacewidth}@{}p{\spacewidth}@{}p{\rcollength}}%
+% Address box
+\parbox{\textwidth-\rcollength-\spacewidth}{%
+56a Dulwich Rd\\
+London\\
+SE24 0PA, UK}
+
+&
+% Uncomment to add a vertical bar in middle of contact information
+%{\vrule width 0.5pt}
+\parbox[m][5\baselineskip]{\spacewidth}{} &
+
+% Non-snail-mail contact information
+\parbox{\rcollength}{%
+\textit{Mobile:} +44 7852 778431 \\
+\textit{E-mail:} \email{simon.thompson@genomicsengland.co.uk}\\
+}
+\end{tabular}
+
+\section{Profile}
+
+I have a wide-ranging skillset centred around data generation, manipulation and analysis and am adept at using a variety of analytical approaches to solve problems and gain valuable insights from data.
+I currently create and maintain data products which improve and disseminate the clinical data held by Genomics England, that inputs to a world-leading interpretation pipeline bringing the benefits of precision medicine to NHS patients.
+Previous to this I spent four years as a postdoc at an Ivy League university, and was solely responsible for the sample collection component of an extensive and complex evolutionary genomics research project.
+
+\section{Appointments}
+
+\textbf{Clinical Data Scientist} \hfill {October 2017 to present}
+
+\href{http://www.genomicsengland.co.uk}{Genomics England}
+
+\smallskip
+Genomics England is the organisation tasked with delivering the NHS's Genomic Medicine Service and, previous to this, the 100,000 Genomes Project. The organisation's mission is to realise the enormous potential of genomic information to enable precision medicine, and it is a world-leader in using genomic and clinical data for patient benefit.
+
+My role has involved working with internal and external partners and stakeholders to develop numerous technical solutions to support, improve, and accelerate the provision of high quality clinical data to the genomic interpretation pipeline (and other destinations), including:
+\begin{innerlist}
+    \item A master catalog of patients that resolves conflicting data from different sources, and is the primary source of patient metadata within the organisation;
+    \item A reporting tool that runs a variety of data quality rules on the clinical and sample data, multiple times per day, highlighting and reporting on errors, inconsistencies, or issues that may delay, or prevent, a report being returned to the patient;
+    \item A framework and database for inspecting and auditing all consent forms received by Genomics England, providing a means to ensure that the organisation only holds data for consented patients, that the data is only used in line with the consent and that patients only receive the tests and results that they request.
+    \item A deidentified version of the entirety of the primary clinical data held, that is made available to a global community of academic researchers and a variety of commercial companies for research.
+\end{innerlist}
+
+% The role also requires engaging with stakeholders to source requirements, and ongoing engagement as the project progresses. 
+
+\halfblankline
+
+\textbf{GeCIP Coordinator} \hfill {October 2015 to October 2017}
+
+\href{http://www.genomicsengland.co.uk}{Genomics England}
+
+\smallskip
+
+I coordinated 2,500 researchers gaining access to the 100,000 Genomes Project dataset, led the project to have their institutions sign agreements concerning IP, and wrote policies and guidance documents to establish a research framework for accessing the full dataset. I also played a key role in developing the requirements and use cases for the online Research Environment where researchers and commercial companies access the data.
+
+\halfblankline
+
+\textbf{Research Coordinator} \hfill {July 2014 to October 2015}
+
+\href{http://www.gacd.org}{Global Alliance for Chronic Diseases Secretariat}, University College London Institute for Global Health
+
+\smallskip
+
+The GACD is an alliance of ten governmental funding agencies (together accounting for $>$80\% of public health funding worldwide) that issues joint implementation science research calls with the aim of reducing the burden of chronic diseases in low- and middle-income countries.
+
+I coordinated the joint activities of multi-agency research programs, totalling over 300 researchers across 20 countries. I cultivated and managed a global research network of scientists and clinicians, and represented their interests to governing bodies within GACD.
+
+\halfblankline
+
+\textbf{Postdoctoral Researcher} \hfill {September 2009 to March 2014}
+
+\href{http://www.med.upenn.edu/tishkoff/index.html}{Tishkoff Laboratory}, University of Pennsylvania
+
+\smallskip
+
+The Tishkoff Lab studies genomic variation, human evolution, and disease risk in global populations. It has extensive sample collections and datasets from diverse populations throughout Africa.
+
+I was solely responsible for the sample collection arm of a \${}2.5m  \href{https://commonfund.nih.gov/pioneer/}{NIH Pioneer Award} project.
+I led four field seasons, totalling 20+ months and enrolled 2,000+ participants, in Ethiopia, Tanzania, Botswana and Cameroon.
+I developed methods and logistics for the collection of multiple data and sample types in remote undeveloped areas, collecting data that has yielded several research articles including one in \emph{Science}.
+
+\halfblankline
+
+
+\textbf{Research Assistant} \hfill {January 2002 to May 2003}
+
+\href{http://www.prion.ucl.ac.uk/}{MRC Prion Unit}, University College London
+
+\smallskip
+
+Research assistant to a mouse geneticist investigating the genetics of prion incubation time.
+
+\section{Education}
+
+University College London  \hfill {September 2003 to February 2008}
+
+PhD, \href{http://www.ucl.ac.uk/cardiovascular/research/cardiovascular-genetics/centre-cardiovascular-genetics}{Centre for Cardiovascular Genetics}.
+
+\smallskip
+
+Thesis title: \emph{Variation within the IL-18 system and its association with cardiovascular disease and obesity}.
+
+\halfblankline
+
+Bristol University\hfill{September 1998 to June 2001}       
+
+BSc Hons., \href{http://www.bristol.ac.uk/biochemistry/}{Biochemistry}, II.I
+
+\section{IT Skills}
+
+I have advanced skills in \textbf{Python}, \textbf{R}, and \textbf{Bash} scripting.
+I regularly create \textbf{PostgreSQL} databases (including \textbf{PL/pgSQL} functions), and can interact with them either via \textbf{SQL} scripts or using declarative \textbf{SQLAlchemy} models.
+I have experience of creating flows in \textbf{Trifacta} and making dashboards in \textbf{Tableau}.
+I routinely use \textbf{git} and \textbf{GitHub} for version control, and have created custom \textbf{Docker} images to run \textbf{GitLab} jobs.
+I am also comfortable configuring \textbf{Jenkins} jobs.
+I use \textbf{Vim} and \textbf{Tmux} daily and have configured each with custom scripts.
+I am very comfortable operating at the commandline and have a good understanding of the different tools it provides.
+
+\section{Selected Published Articles}
+\begin{bibenum}
+%
+\item Crawford NG, Kelly DE, Hansen MEB, Beltrame MH, Fan S, Bowman SL, Jewett E, Ranciaro A, {\bf Thompson S}, .... Loci associated with skin pigmentation identified in African populations. {\em Science}, 2017.\\ \doi{10.1126/science.aan8433}
+
+\item Hansen MEB, Rubel MA, Bailey AG, Ranciaro A, {\bf Thompson SR}, Campbell MC, Beggs W, Dave JR, Mokone GG, Mpoloka SW, Nyambo T, Abnet C, Chanock SJ, Bushman FD, Tishkoff SA. Population structure of human gut bacteria in a diverse cohort from rural Tanzania and Botswana. {\em Genome Biol}, 2019.\\ \doi{10.1186/s13059-018-1616-9}
+
+\item Scheinfeldt LB, Soi S, Lambert C, Ko WY, Coulibaly A, Ranciaro A, {\bf Thompson S}, Hirbo J, Beggs W, Ibrahim M, Nyambo T, Omar S, Woldemeskel D, Belay G, Froment A, Kim J, Tishkoff SA. Genomic evidence for shared common ancestry of East African hunting-gathering populations and insights into local adaptation. {\em Proc Natl Acad Sci U S A}, 2019.\\ \doi{10.1073/pnas.1817678116}
+
+\item M. A. Riddell, N. Edwards, {\bf S. R. Thompson}, A. Bernabe-Ortiz, D. Praveen, C. Johnson, A. P. Kengne, P. Liu, T. McCready, E. Ng, R. Nieuwlaat, B. Ovbiagele, M. Owolabi, D. Peiris, A. G. Thrift, S. Tobe, K. Yusoff On behalf of the GACD Hypertension Research Programme.  Developing consensus measures for global programs: lessons from the Global Alliance for Chronic Diseases Hypertension research program. {\em Globalisation and Health}, 2017.\\ \doi{10.1186/s12992-017-0242-8}
+
+	% \item GACD Hypertension Research Programme Writing Group, D. Peiris, {\bf S. R. Thompson}, A. Beratarrechea, M. K. Cardenas, F. Diez-Canseco, J. Goudge, J. Gyamfi, J. H. Kamano, V. Irazola, C. Johnson, A. P. Kengne, N. K. Keat, J. J. Miranda, S. Mohan, B. Mukasa, E. Ng, R. Nieuwlaat, O. Ogedegbe, B. Ovbiagele, J. Plange-Rhule, D. Praveen, A. Salam, M. Thorogood, A. G. Thrift, R. Vedanthan, S. P. Waddy, J. Webster, R. Webster, K. Yeates, K. Yusoff,  Hypertension Research Programme members.  Behaviour change strategies for reducing blood pressure-related disease burden: findings from a global implementation research programme. {\em Implementation Sci}, 2015.\\ \doi{10.1186/s13012-015-0331-0}
+%
+	% \item M. Campbell, A. Ranciaro, D. Zinshteyn, R. Rawlings-Goss, J. Hirbo, {\bf S. R. Thompson}, D. Woldemeskel, A. Froment, S. Omar, J.M. Bodo, T. Nyambo, G. Belay, D. Drayna, P. Breslin, and S. Tishkoff.  Limited evidence for adaptive evolution and functional effect of allelic variation at rs702424 in the promoter of the TAS2R16 bitter taste receptor gene in Africa. {\em J. Hum. Genet.}, 2014.\\ \doi{10.1038/jhg.2014.29}
+%
+	% \item M.C. Campbell, A. Ranciaro, D. Zinshteyn, R. Rawlings-Goss, J. Hirbo, {\bf S.R. Thompson}, D. Woldemeskel, A. Froment, J.B. Rucker, S. Omar, J.M. Bodo, T. Nyambo, G. Belay, D. Drayna, P.A. Breslin, S.A. Tishkoff.  Origin and differential selection of allelic variation at {\em TAS2R16} associated with salicin bitter taste sensitivity in Africa. {\em Mol Biol Evol.}, 2013.\\ \doi{10.1093/molbev/mst211}
+%
+	% \item L.B. Scheinfeldt, S. Soi, {\bf S.R. Thompson}, A. Ranciaro, D. Woldemeskel, W. Beggs, C. Lambert, J.P. Jarvis, D. Abate, G. Belay, S.A. Tishkoff.  Genetic adaptation to high altitude in the Ethiopian highlands. {\em Genome Biol.}, 2012.\\ \doi{10.1186/gb-2012-13-1-r1}
+%
+	\item {\bf S.R. Thompson}, S.E. Humphries, M.G. Thomas, R. Ekong, A. Tarekegn, E. Bekele, O. Creemer, N. Bradman, and K.R. Veeramah.  The frequency of an IL-18-associated haplotype in Africans. {\em Eur. J. Hum. Genet.}, 2012.\\ \doi{10.1038/ejhg.2012.184}
+
+%
+	% \item {\bf S.R. Thompson}, P.A. McCaskie, J.P. Beilby, J. Hung, M. Jennens, C. Chapman, P. Thompson, and S.E. Humphries.  {\em IL18} haplotypes are associated with serum IL-18 concentrations in a population-based study and a cohort of individuals with premature coronary heart disease. {\em Clin. Chem.}, 2007.\\ \doi{10.1373/clinchem.2007.092692}
+%
+	\item {\bf S.R. Thompson}, D. Novick, C.J. Stock, J. Sanders, D. Brull, J. Cooper, P. Woo, G. Miller, M. Rubinstein, and S.E. Humphries.  Free interleukin (IL)-18 levels, and the impact of {\em IL18} and {\em IL18BP} genetic variation, in CHD patients and healthy men. {\em Arterioscler. Thromb. Vasc. Biol.}, 2007.\\ \doi{10.1161/ATVBAHA.107.149245}
+%
+	% \item {\bf S.R. Thompson}, J. Sanders, J.W. Stephens, G.J. Miller, and S.E. Humphries.  A common interleukin-18 haplotype is associated with higher body mass index in subjects with diabetes and coronary heart disease. {\em Metabolism}, 2007.\\ \doi{10.1016/j.metabol.2006.12.015}
+%
+	% \item P.T. Wootton, N.L. Arora, F. Drenos, {\bf S.R. Thompson}, J.A. Cooper, J.W. Stephens, S.J. Hurel, E. Hurt-Camejo, O. Wiklund, S.E. Humphries, and P.J. Talmud.  Tagging SNP haplotype analysis of the secretory PLA2-V gene, {\em PLA2G5}, shows strong association with LDL and oxLDL levels, suggesting functional distinction from sPLA2-IIA: Results from the UDACS study. {\em Hum. Mol. Genet.}, 2007.\\ \doi{10.1093/hmg/ddm094}
+%
+	% \item P.T. Wootton, F. Drenos, J.A. Cooper, {\bf S.R. Thompson}, J.W. Stephens, E. Hurt-Camejo, O. Wiklund, S.E. Humphries, and P.J. Talmud.  Tagging-SNP haplotype analysis of the secretory PLA2IIa gene {\em PLA2G2A} shows strong association with serum levels of sPLA2IIa: results from the UDACS study. {\em Hum. Mol. Genet.}, 2006\\ \doi{10.1093/hmg/ddi453}
+%
+	% \item S.E. Lloyd, {\bf S.R. Thompson}, J.A. Beck, J.M. Linehan, J.D. Wadsworth, S. Brandner, J. Collinge, and E.M. Fisher.  Identification and characterization of a novel mouse prion gene allele. {\em Mamm. Genome}, 2004.\\ \doi{10.1007/s00335-004-3041-5}
+
+\end{bibenum}
+
+\section{Personal Interests}
+
+\begin{innerlist}
+	\item I enjoy cycle touring and spent five months cycling and trekking through south America. Prior to this, in 2008--2009, I cycled from England to Kenya over six months raising money to build a school in Kenya.
+	\item I also enjoy swimming, photography, and spending time walking in the outdoors with my family.
+\end{innerlist}
+
+\section{References Available to Contact}
+
+\emph{I can provide references on request}
+
+\end{document}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%% End CV Document %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%----------------------------------------------------------------------%
+% The following is copyright and licensing information for
+% redistribution of this LaTeX source code; it also includes a liability
+% statement. If this source code is not being redistributed to others,
+% it may be omitted. It has no effect on the function of the above code.
+%----------------------------------------------------------------------%
+% Copyright (c) 2007, 2008, 2009, 2010, 2011 by Theodore P. Pavlic
+%
+% Unless otherwise expressly stated, this work is licensed under the
+% Creative Commons Attribution-Noncommercial 3.0 United States License. To
+% view a copy of this license, visit
+% http://creativecommons.org/licenses/by-nc/3.0/us/ or send a letter to
+% Creative Commons, 171 Second Street, Suite 300, San Francisco,
+% California, 94105, USA.
+%
+% THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+% OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+% MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+% IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
+% CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+% TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+% SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+%----------------------------------------------------------------------%
